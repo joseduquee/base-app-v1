@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+  app:
+    image: node:14-alpine
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app:cached
+    command: npm start
+    environment:
+      - http_proxy=http://ptmproxy.gmv.es:80
+      - https_proxy=http://ptmproxy.gmv.es:80
+      - HTTP_PROXY=http://ptmproxy.gmv.es:80
+      - HTTPS_PROXY=http://ptmproxy.gmv.es:80
+      - REACT_APP_SAT=SAT01, SAT02, SAT03, SAT04
+      - ENDPOINT_BASE=$HOSTNAME:8082
+    tty: true

@@ -1,11 +1,15 @@
 
-export const Dropdown = () => {
+export const Dropdown = ({ items = [] }) => {
     return (
         <select className='form-select' aria-label='Default select example'>
             <option defaultValue></option>
-            <option value='1'>One</option>
-            <option value='2'>Two</option>
-            <option value='3'>Three</option>
+            {
+                items.map((item, index) => (
+                    <option key={index} value={item}>{item}</option>
+
+                ))
+            }
         </select>
     )
 }
+

@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const pokemonApi = axios.create({
-    baseURL: 'https://pokeapi.co/api/v2'
+const svc13Api = axios.create({
+    baseURL: 'http://localhost:8082'
 })
 
-export const getPokemons = async() => {
-    const { data } = await pokemonApi.get(`/pokemon?limit=50`);
-    return data.results;
+export const getFiles = async () => {
+    const {data} = await svc13Api.get(`/files?domain=SAT01`);
+    return data;
 }
 
-export const getPokemonById = async() => {
-    const { data } = await pokemonApi.get('pokemon/4')
+export const getPokemonById = async () => {
+    const { data } = await svc13Api.get('pokemon/4')
     return data;
 }

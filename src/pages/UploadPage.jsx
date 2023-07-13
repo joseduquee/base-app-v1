@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react';
 import { List, Dropdown, FileUploadButton } from '../components';
 import { Link } from 'react-router-dom';
-import { getPokemons } from '../api/httpClient'
+import { getFiles } from '../api/httpClient'
 
 
 export const UploadPage = () => {
   
   
-  const [pokemons, setPokemons] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [sats, setSats] = useState([]);
+  
 
   useEffect(() => {
-      getPokemons()
-          .then((pokemons) => setPokemons(pokemons))
-          .catch((err) => console.log(err))
+      getFiles()
+          .then(setFiles)
+         .catch((err) => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    setSats(process.env.REACT_APP_SAT.split(','));
   }, [])
   
   return (
@@ -21,11 +27,11 @@ export const UploadPage = () => {
       <div className='container mt-4'>
         <div className='row'>
           <div className='col-6'>
-            <List pokemons={pokemons} />
+            <List items={files} />
           </div>
           <div className='col-4 ps-4'>
             <div className='row'>
-              <Dropdown />
+              <Dropdown items={ sats }/>
             </div>
             <div className='row mt-4'>
               <FileUploadButton />
