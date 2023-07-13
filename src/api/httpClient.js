@@ -4,8 +4,8 @@ const svc13Api = axios.create({
     baseURL: 'http://localhost:8082'
 })
 
-export const getFiles = async () => {
-    const {data} = await svc13Api.get(`/files?domain=SAT01`);
+export const getFiles = async (selectedValue) => {
+    const {data} = await svc13Api.get(`/files?domain=${selectedValue}`);
     return data;
 }
 

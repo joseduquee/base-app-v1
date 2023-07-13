@@ -1,7 +1,5 @@
-import { Link, NavLink } from 'react-router-dom';
-import React, { useState } from 'react';
-import { Dropdown, Button, ListGroup, Form } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Navbar = () => {
