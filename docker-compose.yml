@@ -13,6 +13,6 @@ services:
       - https_proxy=http://ptmproxy.gmv.es:80
       - HTTP_PROXY=http://ptmproxy.gmv.es:80
       - HTTPS_PROXY=http://ptmproxy.gmv.es:80
-      - REACT_APP_SAT=SAT01, SAT02, SAT03, SAT04
-      - ENDPOINT_BASE=$HOSTNAME:8082
+      - REACT_APP_SAT=SAT01,SAT02,SAT03,SAT04
+      - REACT_APP_ENDPOINT_BASE=http://$HOSTNAME:8082
     tty: true

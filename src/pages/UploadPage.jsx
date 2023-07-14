@@ -1,33 +1,41 @@
 import { useState, useEffect } from 'react';
 import { List, Dropdown } from '../components';
 import { Link } from 'react-router-dom';
-import { getFiles } from '../api/httpClient'
-
+import { getFiles, putFile } from '../api/httpClient';
+import Swal from 'sweetalert2';
 
 export const UploadPage = () => {
-
 
   const [files, setFiles] = useState([]);
   const [sats, setSats] = useState([]);
   const [selectedFile, setSelectedFile] = useState();
+  const [selectedSat, setSelectedSat] = useState();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setSats(process.env.REACT_APP_SAT.split(','));
-  }, [])
+  }, []);
 
   const handleDropdownSelect = (selectedValue) => {
+    setError(null);
+    setSelectedSat(selectedValue);
     getFiles(selectedValue)
       .then(setFiles)
-      .catch((err) => console.log(err))
+      .catch((err) => setError(err.response.data))
   };
 
   const handleListSelect = (selectedFile) => {
     setSelectedFile(selectedFile)
-    console.log(selectedFile);
   };
 
-  const handleClickUpload = () => {
-    console.log(`POST ${selectedFile}`);
+  const handleClickUpload = async () => {
+    const data = {
+      "domain": selectedSat,
+      "name": selectedFile
+    }
+    await putFile(data)
+      .then(console.log)
+      .catch((err) => Swal.fire('Error', err.response.data, 'error'))
   }
 
   return (
@@ -36,19 +44,21 @@ export const UploadPage = () => {
       <div className='container mt-4'>
         <div className='row'>
           <div className='col-6'>
-            <List items={files} onSelectFile={ handleListSelect } />
+            <List items={files} onSelectFile={handleListSelect} error={ error }/>
           </div>
           <div className='col-4 ps-4'>
             <div className='row'>
-              <Dropdown items={sats} onSelectSat={ handleDropdownSelect } />
+              <Dropdown items={sats} onSelectSat={handleDropdownSelect} />
             </div>
             <div className='row mt-4'>
               <button
                 onClick={handleClickUpload}
-                className='btn btn-primary mb-2'>
+                className='btn btn-primary mb-2'
+                disabled={ !selectedFile || !selectedSat }
+              >
                 Upload
               </button>
-              <Link className='btn btn-danger btn-block' to={`/page2`}>
+              <Link className='btn btn-danger btn-block' to={`/`}>
                 Abort
               </Link>
             </div>

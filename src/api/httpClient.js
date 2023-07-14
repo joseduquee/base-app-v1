@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const svc13Api = axios.create({
-    baseURL: 'http://localhost:8082'
+    baseURL: process.env.REACT_APP_ENDPOINT_BASE
 })
 
 export const getFiles = async (selectedValue) => {
@@ -9,7 +9,7 @@ export const getFiles = async (selectedValue) => {
     return data;
 }
 
-export const getPokemonById = async () => {
-    const { data } = await svc13Api.get('pokemon/4')
-    return data;
+export const putFile = async (body) => {
+    const response = await svc13Api.put('files/upload', body);
+    return response;
 }
