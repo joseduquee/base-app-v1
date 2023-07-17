@@ -34,7 +34,7 @@ export const UploadPage = () => {
       "name": selectedFile
     }
     await putFile(data)
-      .then(console.log)
+      .then(() => Swal.fire('Successfull', 'Upload started', 'success'))
       .catch((err) => Swal.fire('Error', err.response.data, 'error'))
   }
 
